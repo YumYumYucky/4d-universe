@@ -1,21 +1,25 @@
 # dirived from https://pythonprogramming.net/opengl-rotating-cube-example-pyopengl-tutorial/
 
-import math
-import threading
-
 import pygame
-from OpenGL.GL import *
-from OpenGL.GLU import *
+import time
+import threading
+import math
 from pygame.locals import *
 
-global x_p, y_p, z_p, w_p, theta, l, x, y, z, w, pointing, r, theta, psi, omega
+from OpenGL.GL import *
+from OpenGL.GLU import *
 
 
+
+
+
+global x_p, y_p, z_p, w_p, theta, l, x, y, z, w, direction, r, theta, psi, omega
 
 x_p=[1,1,1,1,-1,-1,-1,-1,1,1,1,1,-1,-1,-1,-1,0]
 y_p=[-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,0]
 z_p=[-1,-1,1,1,-1,-1,1,1,-1,-1,1,1,-1,-1,1,1,0]
 w_p=[1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,2]
+direction=[0,1,0,0]
 x=0
 y=0
 z=0
@@ -24,7 +28,7 @@ w=0
 
 
 #rotation increments
-theta=1/100
+theta=(math.pi)/128
 
 #projection distance
 l=2.1
@@ -40,43 +44,14 @@ l=2.1
 
 class move:
 
-Skip to content
-Product
-Team
-Enterprise
-Explore
-Marketplace
-Pricing
-Search
-Sign in
-Sign up
-YumYumYucky
-/
-4d-universe
-Public
-Code
-Issues
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-4d-universe/4d-movement.py /
-@YumYumYucky
-YumYumYucky changed to 4d-movement.py and README.md
-Latest commit 2ce1682 on Feb 2
- History
- 1 contributor
-558 lines (373 sloc)  10.9 KB
-
-
-
   def steriographic():
  
    global verticies1, edges1
 
 
+
+
+   #Have to replace all of these
 
    x0=((x_p[0])/(l-w_p[0]))+x
    x1=((x_p[1])/(l-w_p[1]))+x
@@ -214,15 +189,15 @@ Latest commit 2ce1682 on Feb 2
     print(f'\northographic cords of x0={x_p[0]}')
     print(f'steriographic cords of x0={x0}')
     print(f'orthographic cords of x16={x_p[16]}')
-    print(f'{pointing}')
+    print(f'{direction}')
 
 
   def c_p(d):
    global r, theta, psi, omega
 
    r=math.sqrt(d[0]**2+d[1]**2+d[2]**2+d[3]**2)
-   theta=math.acos(d[3]/r)
-   psi=math.acos(d[2]/(math.sqrt(d[0]**2+d[1]**2+d[2]**2)))
+   theta=math.acos(d[3]/r)+(math.pi)/2
+   psi=math.acos(d[2]/(math.sqrt(d[0]**2+d[1]**2+d[2]**2)))+(math.pi)/2
    omega=math.atan(d[0]/d[1])
 
    print(f'magnatude= {r}')
@@ -232,148 +207,99 @@ Latest commit 2ce1682 on Feb 2
 
 
 
-
   def press():
    global x, y, z, w
    rotate='rotate'
    counter_rotate='counter_rotate'
-   
-   plane=[0,1]
-   
+
   
    key=pygame.key.get_pressed()
    if key[pygame.K_j]:
     plane=[0,1]
-    plane.start(x_p,y_p,plane)
-    rotate_direction.start(plane, rotate)
+    rotate_plane(x_p,y_p,plane,rotate)
 
 
    if key[pygame.K_l]:
     plane=[0,1]
-    plane.start(y_p,x_p,plane)
-    rotate_direction.start(plane, counter_rotate)
+    rotate_plane(y_p,x_p,plane,counter_rotate)
 
 
    if key[pygame.K_i]:
     plane=[0,2]
-    plane.start(x_p,z_p,plane)
-    rotate_direction.start(plane, rotate)
+    rotate_plane(x_p,z_p,plane,rotate)
 
 
    if key[pygame.K_k]:
     plane=[0,2]
-    plane.start(z_p,x_p,plane)
-    rotate_direction.start(plane, counter_rotate)
+    rotate_plane(z_p,x_p,plane,counter_rotate)
+
 
 
    if key[pygame.K_t]:
     plane=[0,3]
-    plane.start(x_p,w_p,plane)
-    rotate_direction.start(plane, rotate)
+    rotate_plane(x_p,w_p,plane,rotate)
 
 
    if key[pygame.K_u]:
     plane=[0,3]
-    plane.start(w_p,x_p,plane)
-    rotate_direction.start(plane, counter_rotate)
+    rotate_plane(w_p,x_p,plane,counter_rotate)
 
 
    if key[pygame.K_y]:
     plane=[1,2]
-    plane.start(y_p,z_p,plane)
-    rotate_direction.start(plane, rotate)
+    rotate_plane(y_p,z_p,plane,rotate)
 
 
    if key[pygame.K_h]:
     plane=[1,2]
-    plane.start(z_p,y_p,plane)
-    rotate_direction.start(plane, counter_rotate)
+    rotate_plane(z_p,y_p,plane,counter_rotate)
+
 
 
    if key[pygame.K_f]:
     plane=[1,3]
-    plane.start(y_p,w_p,plane)
-    rotate_direction.start(plane, rotate)
+    rotate_plane(y_p,w_p,plane,rotate)
 
 
    if key[pygame.K_v]:
     plane=[1,3]
-    plane.start(w_p,y_p,plane)
-    rotate_direction.start(plane, counter_rotate)
+    rotate_plane(w_p,y_p,plane,counter_rotate)
 
 
    if key[pygame.K_c]:
     plane=[2,3]
-    plane.start(z_p,w_p,plane)
-    rotate_direction.start(plane, rotate)
+    rotate_plane(z_p,w_p,plane,rotate)
 
    if key[pygame.K_b]:
     plane=[2,3]
-    plane.start(w_p,z_p,plane)
-    rotate_direction.start(plane, counter_rotate)
+    rotate_plane(w_p,z_p,plane,counter_rotate)
 
 
 
    #movement
-
-   #UP
    if key[pygame.K_d]:
+    x=x+1
 
-    # may have wrong axes!!
-    # could have to switch them when moving in other directions because theta is used 
-    x=x+((r+1)*math.sin(theta)*math.sin(psi)*math.sin(omega))
-    y=y+((r+1)*math.sin(theta)*math.sin(psi)*math.cos(omega))
-    z=z+((r+1)*math.sin(theta)*math.cos(psi))
-    w=w+((r+1)*math.cos(theta))
-
-   #DOWN
    if key[pygame.K_a]:
-    x=x+((r+1)*math.sin(theta+math.pi)*math.sin(psi)*math.sin(omega))
-    y=y+((r+1)*math.sin(theta+math.pi)*math.sin(psi)*math.cos(omega))
-    z=z+((r+1)*math.sin(theta+math.pi)*math.cos(psi))
-    w=w+((r+1)*math.cos(theta+math.pi))
+    x=x-1
 
-   #W-
    if key[pygame.K_w]:
-    x=x+((r+1)*math.sin(theta+(math.pi)/2)*math.sin(psi)*math.sin(omega))
-    y=y+((r+1)*math.sin(theta+(math.pi)/2)*math.sin(psi)*math.cos(omega))
-    z=z+((r+1)*math.sin(theta+(math.pi)/2)*math.cos(psi))
-    w=w+((r+1)*math.cos(theta+(math.pi)/2))
+    y=y+1
 
-   #W+
    if key[pygame.K_s]:
-    x=x+((r+1)*math.sin(theta-(math.pi)/2)*math.sin(psi)*math.sin(omega))
-    y=y+((r+1)*math.sin(theta-(math.pi)/2)*math.sin(psi)*math.cos(omega))
-    z=z+((r+1)*math.sin(theta-(math.pi)/2)*math.cos(psi))
-    w=w+((r+1)*math.cos(theta-(math.pi)/2))
+    y=y-1
 
-   #BACK
    if key[pygame.K_UP]:
-    x=x+((r+1)*math.sin(theta)*math.sin(psi+(math.pi)/2)*math.sin(omega))
-    y=y+((r+1)*math.sin(theta)*math.sin(psi+(math.pi)/2)*math.cos(omega))
-    z=z+((r+1)*math.sin(theta)*math.cos(psi+(math.pi)/2))
-    w=w+((r+1)*math.cos(theta))
+    z=z+1
 
-   #FORWARD
    if key[pygame.K_DOWN]:
-    x=x+((r+1)*math.sin(theta)*math.sin(psi-(math.pi)/2)*math.sin(omega))
-    y=y+((r+1)*math.sin(theta)*math.sin(psi-(math.pi)/2)*math.cos(omega))
-    z=z+((r+1)*math.sin(theta)*math.cos(psi-(math.pi)/2))
-    w=w+((r+1)*math.cos(theta))
+    z=z-1
 
-   #RIGHT
    if key[pygame.K_RIGHT]:
-    x=x+((r+1)*math.sin(theta)*math.sin(psi)*math.sin(omega+(math.pi)/2))
-    y=y+((r+1)*math.sin(theta)*math.sin(psi)*math.cos(omega+(math.pi)/2))
-    z=z+((r+1)*math.sin(theta)*math.cos(psi))
-    w=w+((r+1)*math.cos(theta))
+    w=w+1
 
-   #LEFT
    if key[pygame.K_LEFT]:
-    x=x+((r+1)*math.sin(theta)*math.sin(psi)*math.sin(omega-(math.pi)/2))
-    y=y+((r+1)*math.sin(theta)*math.sin(psi)*math.cos(omega-(math.pi)/2))
-    z=z+((r+1)*math.sin(theta)*math.cos(psi))
-    w=w+((r+1)*math.cos(theta))
+    w=w-1 
 
 
 
@@ -381,49 +307,46 @@ Latest commit 2ce1682 on Feb 2
 
 
 
-  def rotate_plane(first_axis,second_axis,plane):
-   global x_p, y_p, z_p, w_p, pointing
+def rotate_plane(first_axis,second_axis,plane, rotation):
+ global x_p, y_p, z_p, w_p, direction
 
-   location=[]
-   s_location=[]
-
-   for a in range(len(first_axis)):
-     f0=(first_axis[a]*math.cos(theta))-(second_axis[a]*math.sin(theta))
-     s0=(first_axis[a]*math.sin(theta))+(second_axis[a]*math.cos(theta))
-
-     s_location.append(s0)
-     location.append(f0)
+ location=[]
+ s_location=[]
 
 
-   if first_axis == x_p:
-    x_p=location
 
-   elif first_axis == y_p:
-    y_p=location
+ for a in range(len(first_axis)):
+   f0=(first_axis[a]*math.cos(theta))-(second_axis[a]*math.sin(theta))
+   s0=(first_axis[a]*math.sin(theta))+(second_axis[a]*math.cos(theta))
 
-   elif first_axis == z_p:
-    z_p=location
+   s_location.append(s0)
+   location.append(f0)
 
-   elif first_axis == w_p:
-    w_p=location
 
-   else:
-    print('HELP')
+ if first_axis == x_p:
+  x_p=location
 
-   if second_axis == x_p:
-    x_p=s_location
+ if first_axis == y_p:
+  y_p=location
 
-   elif second_axis == y_p:
-    y_p=s_location
+ if first_axis == z_p:
+  z_p=location
 
-   elif second_axis == z_p:
-    z_p=s_location
+ if first_axis == w_p:
+  w_p=location
 
-   elif second_axis == w_p:
-    w_p=s_location
 
-   else:
-    print('HELP')
+ if second_axis == x_p:
+  x_p=s_location
+
+ if second_axis == y_p:
+  y_p=s_location
+
+ if second_axis == z_p:
+  z_p=s_location
+
+ if second_axis == w_p:
+  w_p=s_location
 
 
 
@@ -431,26 +354,24 @@ Latest commit 2ce1682 on Feb 2
 
 
 
-  def rotate_direction(plane, rotation):
-   global pointing
-
-   print(f'{w_p[1]}')
-
-   if rotation=='rotate':
-    #print(f'plane[0]={plane[0]} and plane[1]={plane[1]}')
-    direction0=(pointing[plane[0]]*math.cos(theta))-(pointing[plane[1]]*math.sin(theta))
-    direction1=(pointing[plane[0]]*math.sin(theta))+(pointing[plane[1]]*math.cos(theta))
-
-    pointing[plane[0]]=direction0
-    pointing[plane[1]]=direction1
-
-   if rotation=='counter_rotate':
-    direction0=(pointing[plane[0]]*math.cos(theta))+(pointing[plane[1]]*math.sin(theta))
-    direction1=-(pointing[plane[0]]*math.sin(theta))+(pointing[plane[1]]*math.cos(theta))
 
 
-    pointing[plane[0]]=direction0
-    pointing[plane[1]]=direction1
+
+
+def rotate_direction(plane, rotation):
+ global direction
+
+ if rotation=='rotate':
+  #print(f'plane[0]={plane[0]} and plane[1]={plane[1]}')
+  direction[plane[0]]=(direction[plane[0]]*math.cos(theta))-(direction[plane[1]]*math.sin(theta))
+  direction[plane[1]]=(direction[plane[0]]*math.sin(theta))+(direction[plane[1]]*math.cos(theta))
+
+ if rotation=='counter_rotate':
+  direction[plane[0]]=(direction[plane[0]]*math.cos(theta))+(direction[plane[1]]*math.sin(theta))
+  direction[plane[1]]=-(direction[plane[0]]*math.sin(theta))+(direction[plane[1]]*math.cos(theta))
+
+
+
 
 
 
@@ -483,7 +404,6 @@ def Cube():
 
 
 def main():
-    global pointing
     pygame.init()
 
     glClearColor(0.2, 0.3, 0.3, 1.0);
@@ -504,19 +424,11 @@ def main():
                 quit()
     
 
-        plane=[0]
-        rotate=[1]
-
-        plane=threading.Thread(target=move.rotate_plane(x_p,y_p,plane))
-        rotate_direction=threading.Thread(target=move.rotate_direction(plane, rotate))
-  
-        pointing=[0,1,0,0]
-
-
         t1=threading.Thread(target=move.press())
         t2=threading.Thread(target=move.steriographic())
         t4=threading.Thread(target=move.positions())
-        t5=threading.Thread(target=move.c_p(pointing))
+        t5=threading.Thread(target=move.c_p(direction))
+
 
         t1.start()
 
@@ -536,4 +448,7 @@ def main():
 
 
 main()
+
+
+
 

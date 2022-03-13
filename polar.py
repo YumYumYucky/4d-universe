@@ -18,10 +18,10 @@ def p_c(r,theta,psi,omega):
 
  global x, y, z, w
 
- x=round(r*math.sin(theta)*math.sin(psi)*math.sin(omega))
- y=round(r*math.sin(theta)*math.sin(psi)*math.cos(omega))
- z=round(r*math.sin(theta)*math.cos(psi))
- w=round(r*math.cos(theta))
+ x=r*math.sin(theta)*math.sin(psi)*math.sin(omega)
+ y=r*math.sin(theta)*math.sin(psi)*math.cos(omega)
+ z=r*math.sin(theta)*math.cos(psi)
+ w=r*math.cos(theta)
 
  print(f'x= {x}')
  print(f'y= {y}')
