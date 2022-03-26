@@ -20,7 +20,7 @@ y = 1
 z = 1
 w = 1
 
-# rotation incrementsl
+# rotation increments
 theta_old = 1 / 100
 
 # projection distance
@@ -37,9 +37,9 @@ l = 2.1
 
 class move:
 
-    def steriographic():
+    def steriographic_w():
 
-        global verticiesw, edgesw
+        global verticies_w, edges_w
 
         x0w = ((x_p[0]) / (l - w_p[0])) + x
         x1w = ((x_p[1]) / (l - w_p[1])) + x
@@ -95,7 +95,7 @@ class move:
         z15w = ((z_p[15]) / (l - w_p[15])) + z
         z16w = ((z_p[16]) / (l - w_p[16])) + z
 
-        verticiesw = (
+        verticies_w = (
 
             (x0w, y0w, z0w),
             (x1w, y1w, z1w),
@@ -116,7 +116,7 @@ class move:
             (x16w, y16w, z16w)
         )
 
-        edgesw = (
+        edges_w = (
             (0, 1),
             (0, 2),
             (0, 4),
@@ -161,23 +161,26 @@ class move:
 
         )
 
-        w0x = ((w_p[0]) / (l - x_p[0])) + w
-        w1x = ((w_p[1]) / (l - x_p[1])) + w
-        w2x = ((w_p[2]) / (l - x_p[2])) + w
-        w3x = ((w_p[3]) / (l - x_p[3])) + w
-        w4x = ((w_p[4]) / (l - x_p[4])) + w
-        w5x = ((w_p[5]) / (l - x_p[5])) + w
-        w6x = ((w_p[6]) / (l - x_p[6])) + w
-        w7x = ((w_p[7]) / (l - x_p[7])) + w
-        w8x = ((w_p[8]) / (l - x_p[8])) + w
-        w9x = ((w_p[9]) / (l - x_p[9])) + w
-        w10x = ((w_p[10]) / (l - x_p[10])) + w
-        w11x = ((w_p[11]) / (l - x_p[11])) + w
-        w12x = ((w_p[12]) / (l - x_p[12])) + w
-        w13x = ((w_p[13]) / (l - x_p[13])) + w
-        w14x = ((w_p[14]) / (l - x_p[14])) + w
-        w15x = ((w_p[15]) / (l - x_p[15])) + w
-        w16x = ((w_p[16]) / (l - x_p[16])) + w
+    def steriographic_x():
+        global verticies_x, edges_x
+
+        w0x = ((w_p[0]) / (l - x_p[0])) + w + 2
+        w1x = ((w_p[1]) / (l - x_p[1])) + w + 2
+        w2x = ((w_p[2]) / (l - x_p[2])) + w + 2
+        w3x = ((w_p[3]) / (l - x_p[3])) + w + 2
+        w4x = ((w_p[4]) / (l - x_p[4])) + w + 2
+        w5x = ((w_p[5]) / (l - x_p[5])) + w + 2
+        w6x = ((w_p[6]) / (l - x_p[6])) + w + 2
+        w7x = ((w_p[7]) / (l - x_p[7])) + w + 2
+        w8x = ((w_p[8]) / (l - x_p[8])) + w + 2
+        w9x = ((w_p[9]) / (l - x_p[9])) + w + 2
+        w10x = ((w_p[10]) / (l - x_p[10])) + w + 2
+        w11x = ((w_p[11]) / (l - x_p[11])) + w + 2
+        w12x = ((w_p[12]) / (l - x_p[12])) + w + 2
+        w13x = ((w_p[13]) / (l - x_p[13])) + w + 2
+        w14x = ((w_p[14]) / (l - x_p[14])) + w + 2
+        w15x = ((w_p[15]) / (l - x_p[15])) + w + 2
+        w16x = ((w_p[16]) / (l - x_p[16])) + w + 2
 
         y0x = ((y_p[0]) / (l - x_p[0])) + y
         y1x = ((y_p[1]) / (l - x_p[1])) + y
@@ -215,7 +218,7 @@ class move:
         z15x = ((z_p[15]) / (l - x_p[15])) + z
         z16x = ((z_p[16]) / (l - x_p[16])) + z
 
-        verticiesx = (
+        verticies_x = (
 
             (w0x, y0x, z0x),
             (w1x, y1x, z1x),
@@ -235,6 +238,54 @@ class move:
             (w15x, y15x, z15x),
             (w16x, y16x, z16x)
         )
+
+        edges_x = (
+            (0, 1),
+            (0, 2),
+            (0, 4),
+            (3, 1),
+            (3, 2),
+            (3, 7),
+            (6, 2),
+            (6, 4),
+            (6, 7),
+            (5, 1),
+            (5, 4),
+            (5, 7),
+            (8, 9),
+            (8, 10),
+            (8, 12),
+            (11, 9),
+            (11, 10),
+            (11, 15),
+            (14, 10),
+            (14, 12),
+            (14, 15),
+            (13, 9),
+            (13, 12),
+            (13, 15),
+            (0, 8),
+            (1, 9),
+            (2, 10),
+            (3, 11),
+            (4, 12),
+            (5, 13),
+            (6, 14),
+            (7, 15),
+
+            (0, 16),
+            (1, 16),
+            (2, 16),
+            (3, 16),
+            (4, 16),
+            (5, 16),
+            (6, 16),
+            (7, 16)
+
+        )
+
+    def steriographic_y():
+        global verticies_y, edges_y
 
         w0y = ((w_p[0]) / (l - y_p[0])) + w
         w1y = ((w_p[1]) / (l - y_p[1])) + w
@@ -290,8 +341,7 @@ class move:
         z15y = ((z_p[15]) / (l - y_p[15])) + z
         z16y = ((z_p[16]) / (l - y_p[16])) + z
 
-
-        verticiesy = (
+        verticies_y = (
 
             (w0y, x0y, z0y),
             (w1y, x1y, z1y),
@@ -311,6 +361,54 @@ class move:
             (w15y, x15y, z15y),
             (w16y, x16y, z16y)
         )
+
+        edges_y = (
+            (0, 1),
+            (0, 2),
+            (0, 4),
+            (3, 1),
+            (3, 2),
+            (3, 7),
+            (6, 2),
+            (6, 4),
+            (6, 7),
+            (5, 1),
+            (5, 4),
+            (5, 7),
+            (8, 9),
+            (8, 10),
+            (8, 12),
+            (11, 9),
+            (11, 10),
+            (11, 15),
+            (14, 10),
+            (14, 12),
+            (14, 15),
+            (13, 9),
+            (13, 12),
+            (13, 15),
+            (0, 8),
+            (1, 9),
+            (2, 10),
+            (3, 11),
+            (4, 12),
+            (5, 13),
+            (6, 14),
+            (7, 15),
+
+            (0, 16),
+            (1, 16),
+            (2, 16),
+            (3, 16),
+            (4, 16),
+            (5, 16),
+            (6, 16),
+            (7, 16)
+
+        )
+
+    def steriographic_z():
+        global verticies_z, edges_z
 
         w0z = ((w_p[0]) / (l - z_p[0])) + w
         w1z = ((w_p[1]) / (l - z_p[1])) + w
@@ -344,7 +442,7 @@ class move:
         x11z = ((x_p[11]) / (l - z_p[11])) + x
         x12z = ((x_p[12]) / (l - z_p[12])) + x
         x13z = ((x_p[13]) / (l - z_p[13])) + x
-        x12z = ((x_p[14]) / (l - z_p[14])) + x
+        x14z = ((x_p[14]) / (l - z_p[14])) + x
         x15z = ((x_p[15]) / (l - z_p[15])) + x
         x16z = ((x_p[16]) / (l - z_p[16])) + x
 
@@ -365,6 +463,72 @@ class move:
         y14z = ((y_p[14]) / (l - z_p[14])) + y
         y15z = ((y_p[15]) / (l - z_p[15])) + y
         y16z = ((y_p[16]) / (l - z_p[16])) + y
+
+        verticies_z = (
+
+            (w0z, x0z, y0z),
+            (w1z, x1z, y1z),
+            (w2z, x2z, y2z),
+            (w3z, x3z, y3z),
+            (w4z, x4z, y4z),
+            (w5z, x5z, y5z),
+            (w6z, x6z, y6z),
+            (w7z, x7z, y7z),
+            (w8z, x8z, y8z),
+            (w9z, x9z, y9z),
+            (w10z, x10z, y10z),
+            (w11z, x11z, y11z),
+            (w12z, x12z, y12z),
+            (w13z, x13z, y13z),
+            (w14z, x14z, y14z),
+            (w15z, x15z, y15z),
+            (w16z, x16z, y16z)
+        )
+
+        edges_z = (
+            (0, 1),
+            (0, 2),
+            (0, 4),
+            (3, 1),
+            (3, 2),
+            (3, 7),
+            (6, 2),
+            (6, 4),
+            (6, 7),
+            (5, 1),
+            (5, 4),
+            (5, 7),
+            (8, 9),
+            (8, 10),
+            (8, 12),
+            (11, 9),
+            (11, 10),
+            (11, 15),
+            (14, 10),
+            (14, 12),
+            (14, 15),
+            (13, 9),
+            (13, 12),
+            (13, 15),
+            (0, 8),
+            (1, 9),
+            (2, 10),
+            (3, 11),
+            (4, 12),
+            (5, 13),
+            (6, 14),
+            (7, 15),
+
+            (0, 16),
+            (1, 16),
+            (2, 16),
+            (3, 16),
+            (4, 16),
+            (5, 16),
+            (6, 16),
+            (7, 16)
+
+        )
 
     def positions():
         x0 = ((x_p[0]) / (l - w_p[0]))
@@ -610,10 +774,28 @@ def positions1():
 
 def Cube():
     glBegin(GL_LINES)
-    for edge in edgesw:
-        for vertex in edge:
-            glVertex3fv(verticiesw[vertex])
+    for edge_w in edges_w:
+        for vertex in edge_w:
+            glVertex3fv(verticies_w[vertex])
+    for edge_x in edges_x:
+        for vertex_x in edge_x:
+            glVertex3fv(verticies_x[vertex_x])
+    for edge_y in edges_y:
+        for vertex_y in edge_y:
+            glVertex3fv(verticies_y[vertex_y])
+    for edge_z in edges_z:
+        for vertex_z in edge_z:
+            glVertex3fv(verticies_z[vertex_z])
     glEnd()
+
+
+# def Cubex():
+#    glBegin(GL_LINES)
+##    for edge in edgesx:
+#        for vertex in edge:
+#            glVertex3fv(verticiesx[vertex])
+#    glEnd()
+# TUPLE INDEX OUT OF RANGE
 
 
 def main():
@@ -637,15 +819,25 @@ def main():
                 quit()
 
         t1 = threading.Thread(target=move.press())
-        t2 = threading.Thread(target=move.steriographic())
+        # t2 = threading.Thread(target=move.stereographic())
         t4 = threading.Thread(target=move.positions())
         t5 = threading.Thread(target=move.c_p(pointing))
-        t6 = threading.Thread(target=move.gravity())
+        # t6 = threading.Thread(target=move.gravity())
+
+        t7 = threading.Thread(target=move.steriographic_w())
+        t8 = threading.Thread(target=move.steriographic_x())
+        t9 = threading.Thread(target=move.steriographic_y())
+        t10 = threading.Thread(target=move.steriographic_z())
 
         t1.start()
 
         # steriograhic projection
-        t2.start()
+        # t2.start()
+
+        t7.start()
+        t8.start()
+        t9.start()
+        t10.start()
 
         # orthographic projection
         # t3.start()
@@ -654,6 +846,7 @@ def main():
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         Cube()
+        # Cubex()
         pygame.display.flip()
         pygame.time.wait(10)
 
